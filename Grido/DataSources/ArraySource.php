@@ -110,7 +110,7 @@ class ArraySource extends \Nette\Object implements IDataSource
             return $actual !== NULL;
 
         } elseif (in_array($cond, array('<', '<=', '>', '>='))) {
-            return eval("return {$actual} {$cond} {$expected};");
+            return $actual !== NULL && eval("return {$actual} {$cond} {$expected};");
 
         } else {
             throw new \InvalidArgumentException("Condition '$condition' not implemented yet.");
