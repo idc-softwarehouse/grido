@@ -851,9 +851,10 @@ class Grid extends Components\Container
 
     protected function applyPaging()
     {
-        $paginator = $this->getPaginator()
-            ->setItemCount($this->getCount())
-            ->setPage($this->page);
+        $paginator = $this->getPaginator();
+        $paginator->setPage($this->page);
+        $this->model->limit($paginator->getOffset(), $paginator->getLength());
+        $paginator->setItemCount($this->getCount());
 
         $perPage = $this->getPerPage();
         if ($perPage !== NULL && !in_array($perPage, $this->perPageList)) {
@@ -861,7 +862,6 @@ class Grid extends Components\Container
             $perPage = $this->defaultPerPage;
         }
 
-        $this->model->limit($paginator->getOffset(), $paginator->getLength());
     }
 
     protected function createComponentForm($name)
